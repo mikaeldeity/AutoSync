@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<RevitAddIns>
+  <AddIn Type="Application">
+    <Name>ReleaseSync</Name>
+    <Assembly>ReleaseSync.dll</Assembly>
+    <AddInId>13c2b4a9-225a-41de-914e-951696489cd7</AddInId>
+    <FullClassName>ReleaseSync.App</FullClassName>
+    <VendorId>FP</VendorId>
+    <VendorDescription>FP</VendorDescription>
+  </AddIn>
+</RevitAddIns>

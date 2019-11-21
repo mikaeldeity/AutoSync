@@ -1,0 +1,12 @@
+C:\Users\MSantrolli\Documents\Mikael_Personal\ReleaseSync\bin\Debug\ReleaseSync.addin
+C:\Users\MSantrolli\Documents\Mikael_Personal\ReleaseSync\bin\Debug\ReleaseSync.dll
+C:\Users\MSantrolli\Documents\Mikael_Personal\ReleaseSync\bin\Debug\ReleaseSync.pdb
+C:\Users\MSantrolli\Documents\Mikael_Personal\ReleaseSync\obj\Debug\ReleaseSync.csprojAssemblyReference.cache
+C:\Users\MSantrolli\Documents\Mikael_Personal\ReleaseSync\obj\Debug\ReleaseSync.csproj.CoreCompileInputs.cache
+C:\Users\MSantrolli\Documents\Mikael_Personal\ReleaseSync\obj\Debug\ReleaseSync.dll
+C:\Users\MSantrolli\Documents\Mikael_Personal\ReleaseSync\obj\Debug\ReleaseSync.pdb
+C:\ProgramData\Autodesk\Revit\Addins\2019\ReleaseSync.addin
+C:\ProgramData\Autodesk\Revit\Addins\2019\ReleaseSync.dll
+C:\ProgramData\Autodesk\Revit\Addins\2019\ReleaseSync.pdb
+C:\Users\MSantrolli\Documents\Mikael_Personal\ReleaseSync\obj\Debug\OptionsTabControl.resources
+C:\Users\MSantrolli\Documents\Mikael_Personal\ReleaseSync\obj\Debug\ReleaseSync.csproj.GenerateResource.cache
