@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
+using System.Windows.Media.Imaging;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Events;
 using Autodesk.Revit.UI;
@@ -44,6 +45,13 @@ namespace AutoSync
         private static ExternalEvent externalevent = null;
         public Result OnStartup(UIControlledApplication a)
         {
+            RibbonPanel ribbonPanel = a.CreateRibbonPanel("AutoSync");
+            PushButtonData b1Data = new PushButtonData("BEAM", "BEAM", thisAssemblyPath, "REVITBEAM.BEAM");
+            ddPushButton pb1 = sb.AddPushButton(b1Data);
+            pb1.ToolTip = "Import Geometry from Rhino";
+            BitmapImage pb1Image = new BitmapImage(new Uri("pack://application:,,,/REVITBEAM;component/Resources/beam.png"));
+            pb1.LargeImage = pb1Image;
+
             externalevent = ExternalEvent.Create(timerevent);
             //a.Idling += OnIdling;
             a.ControlledApplication.DocumentOpening += new EventHandler<DocumentOpeningEventArgs>(OnOpening);

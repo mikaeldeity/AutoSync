@@ -12,5 +12,4 @@ C:\Users\MSantrolli\Documents\GitHub\AutoSync\Release\AutoSync\AutoSync.dll
 C:\Users\MSantrolli\Documents\GitHub\AutoSync\obj\Release\AutoSync.csprojAssemblyReference.cache
 C:\Users\MSantrolli\Documents\GitHub\AutoSync\obj\Release\AutoSync.DismissDialog.resources
 C:\Users\MSantrolli\Documents\GitHub\AutoSync\obj\Release\AutoSync.csproj.GenerateResource.cache
-C:\Users\MSantrolli\Documents\GitHub\AutoSync\obj\Release\AutoSync.csproj.CoreCompileInputs.cache
 C:\Users\MSantrolli\Documents\GitHub\AutoSync\obj\Release\AutoSync.dll
