@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Threading;
+using System.Reflection;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using Autodesk.Revit.DB;
@@ -14,17 +13,19 @@ namespace AutoSync
 {
     class App : IExternalApplication
     {
-        private static readonly int checkinterval = 1; //Seconds
+        //time always need to be multiples of checkinterval
 
-        private static readonly int dismisstime = 5;
+        private static readonly int checkinterval = 300;//5 min 
 
-        private static readonly int retrysync = 5;
+        private static readonly int dismisstime = 600;//10 min
 
-        private static readonly int relinquishcheck = 30;
+        private static readonly int retrysync = 300;//5 min
 
-        private static readonly int synccheck = 60;
+        private static readonly int relinquishcheck = 600;//10 min
 
-        private static readonly int closecheck = 70;
+        private static readonly int synccheck = 1800;//20 min
+
+        private static readonly int closecheck = 4200;//70 min
 
         private static int countdown = 0;
 
@@ -44,16 +45,21 @@ namespace AutoSync
         private static readonly IdleTimerEvent timerevent = new IdleTimerEvent();
         private static ExternalEvent externalevent = null;
         public Result OnStartup(UIControlledApplication a)
-        {
-            RibbonPanel ribbonPanel = a.CreateRibbonPanel("AutoSync");
-            PushButtonData b1Data = new PushButtonData("BEAM", "BEAM", thisAssemblyPath, "REVITBEAM.BEAM");
-            ddPushButton pb1 = sb.AddPushButton(b1Data);
-            pb1.ToolTip = "Import Geometry from Rhino";
-            BitmapImage pb1Image = new BitmapImage(new Uri("pack://application:,,,/REVITBEAM;component/Resources/beam.png"));
+        {           
+            RibbonPanel ribbonPanel = a.CreateRibbonPanel("F+P");
+
+            string thisAssemblyPath = Assembly.GetExecutingAssembly().Location;
+
+            PushButtonData b1Data = new PushButtonData("AutoSync", "AutoSync", thisAssemblyPath, "AutoSync.AutoSync");
+            b1Data.AvailabilityClassName = "AutoSync.Availability";
+            PushButton pb1 = ribbonPanel.AddItem(b1Data) as PushButton;
+            pb1.ToolTip = "AutoSync Inactive Revit Documents.";
+            Uri addinImage =
+                new Uri("pack://application:,,,/AutoSync;component/Resources/AutoSync.png");
+            BitmapImage pb1Image = new BitmapImage(addinImage);
             pb1.LargeImage = pb1Image;
 
             externalevent = ExternalEvent.Create(timerevent);
-            //a.Idling += OnIdling;
             a.ControlledApplication.DocumentOpening += new EventHandler<DocumentOpeningEventArgs>(OnOpening);
             a.ControlledApplication.DocumentOpened += new EventHandler<DocumentOpenedEventArgs>(OnOpened);
             a.ControlledApplication.DocumentCreated += new EventHandler<DocumentCreatedEventArgs>(OnCreated);
@@ -64,13 +70,8 @@ namespace AutoSync
         }
         public Result OnShutdown(UIControlledApplication a)
         {
-            //a.Idling -= OnIdling;
             idletimer.Dispose();
             return Result.Succeeded;
-        }
-        internal void OnIdling(object sender, IdlingEventArgs e)
-        {            
-            //IDLING BROKEN          
         }
         internal void OnOpening(object sender, DocumentOpeningEventArgs e)
         {
@@ -200,8 +201,6 @@ namespace AutoSync
                 close = true;
                 externalevent.Raise();
             }
-
-            //WriteTxt(countdown.ToString() + " Docs: " + docdict.Keys.Count.ToString());
         }
         private static bool Dismiss()
         {
@@ -217,13 +216,6 @@ namespace AutoSync
             else
             {
                 return false;
-            }
-        }
-        private static void WriteTxt(string time)
-        {
-            using (StreamWriter writer = new StreamWriter("C:\\Users\\stkelly\\Desktop\\New Text Document.txt"))
-            {
-                writer.WriteLine(time);
             }
         }
         public class IdleTimerEvent : IExternalEventHandler
@@ -251,15 +243,11 @@ namespace AutoSync
                 {
                     foreach (Document doc in App.docdict.Keys)
                     {
-                        //WriteTxt("relinquishing " + doc.Title);
                         try
                         {
                             WorksharingUtils.RelinquishOwnership(doc, relinquishoptions, transact);
                         }
-                        catch (Exception e)
-                        {
-                            //WriteTxt(e.Message);
-                        }                        
+                        catch { }                        
                     }
 
                     relinquish = false;
@@ -283,15 +271,13 @@ namespace AutoSync
                         {
                             if (docdict[doc])
                             {
-                                //WriteTxt("syncing " + doc.Title);
                                 doc.SynchronizeWithCentral(transact, syncset);
-                                app.Application.WriteJournalComment("Document Auto Synced", true);
+                                app.Application.WriteJournalComment("AutoSync", true);
                             }
                         }
-                        catch (Exception e)
+                        catch
                         {
                             syncfailed = true;
-                            //WriteTxt(e.Message);
                         }
                     }
 
@@ -334,13 +320,9 @@ namespace AutoSync
                     {
                         try
                         {
-                            //WriteTxt("Closing " + doc.Title);
                             doc.Close(false);
                         }
-                        catch (Exception e)
-                        {
-                            //WriteTxt(e.Message);
-                        }
+                        catch { }
                     }                    
 
                     if (closelast)
@@ -371,8 +353,6 @@ namespace AutoSync
 
                 foreach (FailureMessageAccessor fa in fma)
                 {
-                    string failuremessage = fa.GetDescriptionText();
-
                     fas.DeleteWarning(fa);
                 }
             }
@@ -384,6 +364,13 @@ namespace AutoSync
                 return false;
             }
 
+        }        
+    }
+    public class Availability : IExternalCommandAvailability
+    {
+        public bool IsCommandAvailable(UIApplication a, CategorySet b)
+        {
+            return true;
         }
     }
 }

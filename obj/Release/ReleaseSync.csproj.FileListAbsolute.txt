@@ -1,7 +1,0 @@
-C:\Users\MSantrolli\Documents\Mikael_Personal\ReleaseSync\obj\Release\ReleaseSync.csprojAssemblyReference.cache
-C:\Users\MSantrolli\Documents\Mikael_Personal\ReleaseSync\obj\Release\ReleaseSync.csproj.CoreCompileInputs.cache
-C:\Users\MSantrolli\Documents\Mikael_Personal\ReleaseSync\bin\Release\ReleaseSync.dll
-C:\Users\MSantrolli\Documents\Mikael_Personal\ReleaseSync\bin\Release\ReleaseSync.pdb
-C:\Users\MSantrolli\Documents\Mikael_Personal\ReleaseSync\obj\Release\ReleaseSync.dll
-C:\Users\MSantrolli\Documents\Mikael_Personal\ReleaseSync\obj\Release\ReleaseSync.pdb
-C:\Users\MSantrolli\Documents\Mikael_Personal\ReleaseSync\bin\Release\ReleaseSync.addin

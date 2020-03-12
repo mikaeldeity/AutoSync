@@ -1,9 +1,0 @@
-O:\ProgramData\Autodesk\Revit\Addins\2019\AutoSync.addin
-O:\ProgramData\Autodesk\Revit\Addins\2019\AutoSync.dll
-O:\ProgramData\Autodesk\Revit\Addins\2019\AutoSync.pdb
-O:\99_Home_Shares\ReleaseSync\ReleaseSync\obj\Debug\AutoSync.csprojAssemblyReference.cache
-O:\99_Home_Shares\ReleaseSync\ReleaseSync\obj\Debug\AutoSync.csproj.CoreCompileInputs.cache
-O:\99_Home_Shares\ReleaseSync\ReleaseSync\obj\Debug\AutoSync.dll
-O:\99_Home_Shares\ReleaseSync\ReleaseSync\obj\Debug\AutoSync.pdb
-O:\99_Home_Shares\ReleaseSync\ReleaseSync\obj\Debug\AutoSync.DismissDialog.resources
-O:\99_Home_Shares\ReleaseSync\ReleaseSync\obj\Debug\AutoSync.csproj.GenerateResource.cache
