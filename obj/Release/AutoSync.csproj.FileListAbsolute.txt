@@ -1,10 +1,8 @@
 C:\Users\Mikael\Documents\GitHub\AutoSync\Release\AutoSync\AutoSync.addin
 C:\Users\Mikael\Documents\GitHub\AutoSync\Release\AutoSync\AutoSync.dll
-C:\Users\Mikael\Documents\GitHub\AutoSync\Release\AutoSync\RevitAPI.dll
-C:\Users\Mikael\Documents\GitHub\AutoSync\Release\AutoSync\RevitAPIUI.dll
 C:\Users\Mikael\Documents\GitHub\AutoSync\obj\Release\AutoSync.csprojAssemblyReference.cache
 C:\Users\Mikael\Documents\GitHub\AutoSync\obj\Release\AutoSync.g.resources
 C:\Users\Mikael\Documents\GitHub\AutoSync\obj\Release\AutoSync.DismissDialog.resources
 C:\Users\Mikael\Documents\GitHub\AutoSync\obj\Release\AutoSync.csproj.GenerateResource.cache
-C:\Users\Mikael\Documents\GitHub\AutoSync\obj\Release\AutoSync.csproj.CopyComplete
 C:\Users\Mikael\Documents\GitHub\AutoSync\obj\Release\AutoSync.dll
+C:\Users\Mikael\Documents\GitHub\AutoSync\obj\Release\AutoSync.csproj.CoreCompileInputs.cache
