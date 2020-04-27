@@ -5,7 +5,7 @@
     <Assembly>AutoSync.dll</Assembly>
     <AddInId>13c2b4a9-225a-41de-914e-951696489cd7</AddInId>
     <FullClassName>AutoSync.App</FullClassName>
-    <VendorId>Foster and Partners</VendorId>
-    <VendorDescription>Foster and Partners</VendorDescription>
+    <VendorId>Mikael Santrolli</VendorId>
+    <VendorDescription>mikael.santrolli@gmail.com</VendorDescription>
   </AddIn>
 </RevitAddIns>

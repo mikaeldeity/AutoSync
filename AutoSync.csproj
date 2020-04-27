@@ -62,7 +62,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
-    <Compile Include="AutoSync.cs" />
     <Compile Include="DismissDialog.cs">
       <SubType>Form</SubType>
     </Compile>

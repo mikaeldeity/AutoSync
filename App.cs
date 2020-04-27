@@ -45,12 +45,12 @@ namespace AutoSync
         private static readonly IdleTimerEvent timerevent = new IdleTimerEvent();
         private static ExternalEvent externalevent = null;
         public Result OnStartup(UIControlledApplication a)
-        {           
-            RibbonPanel ribbonPanel = a.CreateRibbonPanel("F+P");
+        {
+            RibbonPanel ribbonPanel = a.CreateRibbonPanel("AutoSync");
 
             string thisAssemblyPath = Assembly.GetExecutingAssembly().Location;
 
-            PushButtonData b1Data = new PushButtonData("AutoSync", "AutoSync", thisAssemblyPath, "AutoSync.AutoSync");
+            PushButtonData b1Data = new PushButtonData("AutoSync", "AutoSync", thisAssemblyPath, "AutoSync.ShowActive");
             b1Data.AvailabilityClassName = "AutoSync.Availability";
             PushButton pb1 = ribbonPanel.AddItem(b1Data) as PushButton;
             pb1.ToolTip = "AutoSync Inactive Revit Documents.";
@@ -371,6 +371,17 @@ namespace AutoSync
         public bool IsCommandAvailable(UIApplication a, CategorySet b)
         {
             return true;
+        }
+    }
+    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
+    [Autodesk.Revit.Attributes.Regeneration(Autodesk.Revit.Attributes.RegenerationOption.Manual)]
+    class ShowActive : IExternalCommand
+    {
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        {
+            TaskDialog.Show("Status", "AutoSync is active.\nRelinquish after 5 minutes.\nSync after 30 minutes.\nClose after 70 min");
+
+            return Result.Succeeded;
         }
     }
 }
