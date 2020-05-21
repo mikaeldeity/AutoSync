@@ -37,27 +37,26 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 18);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(12, 20);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(212, 13);
+            this.label1.Size = new System.Drawing.Size(241, 15);
             this.label1.TabIndex = 0;
             this.label1.Text = "Inactive Documents will be processed now.";
             // 
             // DismissButton
             // 
-            this.DismissButton.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.DismissButton.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.DismissButton.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.DismissButton.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.DismissButton.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.DismissButton.FlatAppearance.BorderSize = 0;
-            this.DismissButton.Location = new System.Drawing.Point(50, 48);
-            this.DismissButton.Margin = new System.Windows.Forms.Padding(0);
+            this.DismissButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DismissButton.Location = new System.Drawing.Point(14, 49);
+            this.DismissButton.Margin = new System.Windows.Forms.Padding(5);
             this.DismissButton.Name = "DismissButton";
-            this.DismissButton.Size = new System.Drawing.Size(135, 25);
+            this.DismissButton.Size = new System.Drawing.Size(237, 51);
             this.DismissButton.TabIndex = 1;
-            this.DismissButton.Text = "Dismiss for 5 seconds";
+            this.DismissButton.Text = "Dismiss for 10 minutes";
             this.DismissButton.UseVisualStyleBackColor = false;
             this.DismissButton.Click += new System.EventHandler(this.DismissButton_Click);
             // 
@@ -72,7 +71,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(234, 91);
+            this.ClientSize = new System.Drawing.Size(265, 114);
+            this.ControlBox = false;
             this.Controls.Add(this.DismissButton);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;

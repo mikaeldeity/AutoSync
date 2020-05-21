@@ -15,17 +15,17 @@ namespace AutoSync
     {
         //time always need to be multiples of checkinterval
 
-        private static readonly int checkinterval = 300;//5 min 
+        private static readonly int checkinterval = 5 * 60;//5 min 
 
-        private static readonly int dismisstime = 600;//10 min
+        private static readonly int dismisstime = 10 * 60;//10 min
 
-        private static readonly int retrysync = 300;//5 min
+        private static readonly int retrysync = 5 * 60;//5 min
 
-        private static readonly int relinquishcheck = 600;//10 min
+        private static readonly int relinquishcheck = 15 * 60;//10 min
 
-        private static readonly int synccheck = 1800;//20 min
+        private static readonly int synccheck = 30 * 60;//20 min
 
-        private static readonly int closecheck = 4200;//70 min
+        private static readonly int closecheck = 120 * 60;//70 min
 
         private static int countdown = 0;
 
@@ -48,14 +48,13 @@ namespace AutoSync
         {
             RibbonPanel ribbonPanel = a.CreateRibbonPanel("AutoSync");
 
-            string thisAssemblyPath = Assembly.GetExecutingAssembly().Location;
+            string assembly = Assembly.GetExecutingAssembly().Location;
 
-            PushButtonData b1Data = new PushButtonData("AutoSync", "AutoSync", thisAssemblyPath, "AutoSync.ShowActive");
+            PushButtonData b1Data = new PushButtonData("AutoSync", "AutoSync", assembly, "AutoSync.ShowActive");
             b1Data.AvailabilityClassName = "AutoSync.Availability";
             PushButton pb1 = ribbonPanel.AddItem(b1Data) as PushButton;
             pb1.ToolTip = "AutoSync Inactive Revit Documents.";
-            Uri addinImage =
-                new Uri("pack://application:,,,/AutoSync;component/Resources/AutoSync.png");
+            Uri addinImage = new Uri("pack://application:,,,/AutoSync;component/Resources/AutoSync.png");
             BitmapImage pb1Image = new BitmapImage(addinImage);
             pb1.LargeImage = pb1Image;
 
@@ -379,7 +378,7 @@ namespace AutoSync
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            TaskDialog.Show("Status", "AutoSync is active.\nRelinquish after 5 minutes.\nSync after 30 minutes.\nClose after 70 min");
+            TaskDialog.Show("Status", "AutoSync is active.\nRelinquish every 15 minutes.\nSync after 30 minutes.\nClose after 120 min");
 
             return Result.Succeeded;
         }
