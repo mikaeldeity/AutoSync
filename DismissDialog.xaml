@@ -1,0 +1,36 @@
+﻿<Window x:Class="AutoSync.Dialogs.DismissDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Icon="AutoSync.ico"
+        Title="AutoSync"
+        WindowStartupLocation="CenterScreen"
+        SizeToContent="WidthAndHeight"
+        SnapsToDevicePixels="True"
+        ResizeMode="NoResize"
+        Background="White"
+        Width="280">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <StackPanel Margin="5">
+        <Label Content="Inactive Documents will be synchronized now." />
+        <Button Click="Button_Click">
+            <TextBlock FontSize="14">
+                <Run Text="Dismiss for" />
+                <Run x:Name="dismissText"
+                     Foreground="DodgerBlue"
+                     Text="$$"/>
+                <Run Text="minutes" />
+            </TextBlock>
+        </Button>
+    </StackPanel>
+</Window>

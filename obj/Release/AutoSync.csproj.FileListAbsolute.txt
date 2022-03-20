@@ -1,8 +1,10 @@
 C:\Users\Mikael\Documents\GitHub\AutoSync\Release\AutoSync\AutoSync.addin
 C:\Users\Mikael\Documents\GitHub\AutoSync\Release\AutoSync\AutoSync.dll
-C:\Users\Mikael\Documents\GitHub\AutoSync\obj\Release\AutoSync.csprojAssemblyReference.cache
 C:\Users\Mikael\Documents\GitHub\AutoSync\obj\Release\AutoSync.g.resources
-C:\Users\Mikael\Documents\GitHub\AutoSync\obj\Release\AutoSync.DismissDialog.resources
-C:\Users\Mikael\Documents\GitHub\AutoSync\obj\Release\AutoSync.csproj.GenerateResource.cache
 C:\Users\Mikael\Documents\GitHub\AutoSync\obj\Release\AutoSync.dll
 C:\Users\Mikael\Documents\GitHub\AutoSync\obj\Release\AutoSync.csproj.CoreCompileInputs.cache
+C:\Users\Mikael\Documents\GitHub\AutoSync\obj\Release\AutoSync.csproj.AssemblyReference.cache
+C:\Users\Mikael\Documents\GitHub\AutoSync\obj\Release\DismissDialog.baml
+C:\Users\Mikael\Documents\GitHub\AutoSync\obj\Release\Styles.baml
+C:\Users\Mikael\Documents\GitHub\AutoSync\obj\Release\DismissDialog.g.cs
+C:\Users\Mikael\Documents\GitHub\AutoSync\obj\Release\AutoSync_MarkupCompile.cache
