@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("AutoSync")]
-[assembly: AssemblyCopyright("Copyright © 2022 Mikael Santrolli")]
+[assembly: AssemblyCopyright("Copyright © 2023 Mikael Santrolli")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

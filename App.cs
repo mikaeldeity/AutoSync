@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
+using System.Windows;
 using System.Windows.Media.Imaging;
 
 namespace AutoSync
@@ -13,27 +15,25 @@ namespace AutoSync
     public class App : IExternalApplication
     {
         //time always need to be multiples of checkinterval
-        private static readonly int checkinterval = 5;
+        internal static Settings Settings = new Settings();
 
-        private static readonly int dismisstime = 30;
+        private static readonly int CheckInterval = 5;
 
-        private static readonly int retrysync = 30;
+        private static readonly int DismissTime = 30;
 
-        internal static readonly int relinquishcheck = 15;
+        private static readonly int RetrySync = 30;
 
-        internal static readonly int synccheck = 120;
+        private static int CountDown = 0;
 
-        private static int countdown = 0;
+        private static bool Running = false;
 
-        private static bool running = false;
+        private static bool Relinquish = false;
 
-        private static bool relinquish = false;
-
-        private static bool sync = false;
+        private static bool Sync = false;
 
         private static readonly List<Document> Documents = new List<Document>();
 
-        private static readonly System.Threading.Timer IdleTimer = new System.Threading.Timer(Tick, null, checkinterval * 60 * 1000, checkinterval * 60 * 1000);
+        private static readonly Timer IdleTimer = new Timer(Tick, null, CheckInterval * 60 * 1000, CheckInterval * 60 * 1000);
 
         private static readonly IdleTimerEvent TimerEvent = new IdleTimerEvent();
 
@@ -76,18 +76,18 @@ namespace AutoSync
         }
         private void Reset()
         {
-            countdown = 0;
-            relinquish = false;
-            sync = false;
+            CountDown = 0;
+            Relinquish = false;
+            Sync = false;
         }
         internal void OnOpening(object sender, DocumentOpeningEventArgs e)
         {
-            running = true;
+            Running = true;
         }
         internal void OnOpened(object sender, DocumentOpenedEventArgs e)
         {
             NewDocument(e.Document);
-            running = false;
+            Running = false;
         }
         internal void OnClosing(object sender, DocumentClosingEventArgs e)
         {
@@ -99,7 +99,7 @@ namespace AutoSync
         }
         public void OnChanged(object sender, DocumentChangedEventArgs e)
         {
-            if (running) { return; }
+            if (Running) { return; }
 
             Document doc = e.GetDocument();
 
@@ -110,7 +110,7 @@ namespace AutoSync
         }
         internal void OnViewActivated(object sender, ViewActivatedEventArgs e)
         {
-            if (running) { return; }
+            if (Running) { return; }
 
             Document doc = e.Document;
 
@@ -139,30 +139,30 @@ namespace AutoSync
         }
         private static void Tick(object state)
         {
-            if (TimerExternalEvent == null | Documents.Count == 0) { countdown = 0; return; }
+            if (TimerExternalEvent == null | Documents.Count == 0) { CountDown = 0; return; }
 
-            if (running | sync) { return; }
+            if (Running | Settings.Sync) { return; }
 
-            countdown += checkinterval;
+            CountDown += CheckInterval;
 
-            if (countdown == relinquishcheck)
+            if (CountDown == Settings.RelinquishCheck && Settings.Relinquish)
             {
-                relinquish = true;
+                Relinquish = true;
                 TimerExternalEvent.Raise();
             }
-            else if (countdown == synccheck)
+            else if (CountDown == Settings.SyncCheck && Settings.Sync)
             {
-                sync = true;
+                Sync = true;
                 TimerExternalEvent.Raise();
             }
         }
         private static bool Dismiss()
         {
-            var dismissdialog = new Dialogs.DismissDialog(dismisstime);
+            var dismissdialog = new Dialogs.DismissDialog(DismissTime);
 
             if (dismissdialog.ShowDialog() == true)
             {
-                countdown -= dismisstime * 60;
+                CountDown -= DismissTime * 60;
                 return true;
             }
             else
@@ -174,74 +174,76 @@ namespace AutoSync
         {
             public void Execute(UIApplication app)
             {
-                if (Documents.Count == 0) { return; }
+                Running = true;
 
-                TransactWithCentralOptions transact = new TransactWithCentralOptions();
-                SynchLockCallback transCallBack = new SynchLockCallback();
-                transact.SetLockCallback(transCallBack);
-                SynchronizeWithCentralOptions syncset = new SynchronizeWithCentralOptions();
-                RelinquishOptions relinquishoptions = new RelinquishOptions(true)
+                try
                 {
-                    CheckedOutElements = true
-                };
-                syncset.SetRelinquishOptions(relinquishoptions);
-
-                running = true;
-
-                if (relinquish)
-                {
-                    foreach (Document doc in Documents)
-                    {
-                        try
-                        {
-                            WorksharingUtils.RelinquishOwnership(doc, relinquishoptions, transact);
-                        }
-                        catch { }
-                    }
-
-                    relinquish = false;
-                }
-                if (sync)
-                {
-                    if (Dismiss())
-                    {
-                        sync = false;
-                        running = false;
-                        return;
-                    }
-
                     app.Application.FailuresProcessing += FailureProcessor;
 
-                    bool syncfailed = false;
+                    if (Documents.Count == 0) { return; }
 
-                    foreach (Document doc in Documents)
+                    TransactWithCentralOptions transactionoptions = new TransactWithCentralOptions();
+                    SynchLockCallback callback = new SynchLockCallback();
+                    transactionoptions.SetLockCallback(callback);
+                    SynchronizeWithCentralOptions syncoptions = new SynchronizeWithCentralOptions();
+                    RelinquishOptions relinquishoptions = new RelinquishOptions(true)
                     {
-                        try
+                        CheckedOutElements = true
+                    };
+                    syncoptions.SetRelinquishOptions(relinquishoptions);
+
+                    if (Relinquish)
+                    {
+                        foreach (Document doc in Documents)
                         {
-                            doc.SynchronizeWithCentral(transact, syncset);
-                            app.Application.WriteJournalComment("AutoSync", true);
+                            try
+                            {
+                                WorksharingUtils.RelinquishOwnership(doc, relinquishoptions, transactionoptions);
+                            }
+                            catch { }
                         }
-                        catch
-                        {
-                            syncfailed = true;
-                        }
+
+                        Relinquish = false;
                     }
 
-                    app.Application.FailuresProcessing -= FailureProcessor;
-
-                    if (syncfailed)
+                    if (Sync)
                     {
-                        countdown -= retrysync;
+                        if (Dismiss())
+                        {
+                            Sync = false;
+                            Running = false;
+                            return;
+                        }
+
+                        foreach (Document doc in Documents)
+                        {
+                            try
+                            {
+                                doc.SynchronizeWithCentral(transactionoptions, syncoptions);
+                                app.Application.WriteJournalComment("AutoSync", true);
+                            }
+                            catch
+                            {
+                                CountDown -= RetrySync;
+                            }
+                        }
+
+                        Sync = false;
                     }
 
-                    sync = false;
+                    transactionoptions.Dispose();
+                    syncoptions.Dispose();
+                    relinquishoptions.Dispose();
                 }
-
-                running = false;
-
-                transact.Dispose();
-                syncset.Dispose();
-                relinquishoptions.Dispose();
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error");
+                }
+                finally
+                {
+                    app.Application.FailuresProcessing -= FailureProcessor;
+                    Running = false;
+                }
             }
             public string GetName()
             {
@@ -280,7 +282,7 @@ namespace AutoSync
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            TaskDialog.Show("Status", $"AutoSync is active.\n\nRelinquish every {App.relinquishcheck} minutes.\nSync after {App.synccheck} minutes.");
+            TaskDialog.Show("Status", $"AutoSync is active.\n\nRelinquish every {App.Settings.RelinquishCheck} minutes.\nSync after {App.Settings.SyncCheck} minutes.");
 
             return Result.Succeeded;
         }
