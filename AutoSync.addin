@@ -2,7 +2,7 @@
 <RevitAddIns>
   <AddIn Type="Application">
     <Name>AutoSync</Name>
-    <Assembly>AutoSync.dll</Assembly>
+    <Assembly>AutoSync/AutoSync.dll</Assembly>
     <AddInId>13c2b4a9-225a-41de-914e-951696489cd7</AddInId>
     <FullClassName>AutoSync.App</FullClassName>
     <VendorId>Mikael Santrolli</VendorId>
